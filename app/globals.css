@@ -2,26 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+input, textarea {
+  @apply border-2 border-gray-400 px-1.5 rounded-md w-full mb-2
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+input:focus, textarea:focus {
+  @apply border-blue-900
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+h1 {
+@apply text-blue-900 mb-2 text-lg font-semibold
+}
+
+label {
+  @apply text-blue-900
+}
+
+.btn-primary {
+  @apply bg-gray-300 text-black py-1 px-2.5 rounded-md
 }
