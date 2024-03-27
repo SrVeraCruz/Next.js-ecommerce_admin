@@ -29,14 +29,15 @@ export default function Categories() {
       name,
       parentCategory:parentCategory || '',
       properties:properties.map((property) => ({
-        name:property.name, values:property.values.split(",")
+        name:property.name, 
+        values:property.values.split(",") || property.values
       }))
     }
     if(editedCategory) {
       //update category
       await axios.put("/api/categories", 
         {...data, _id:editedCategory._id})
-          .then((res) => console.log(res.data))
+          .then((res) => {/*console.log(res.data)*/})
           .catch((err) => console.error(err.data))
         setEditedCategory(null)
     } else {
@@ -62,10 +63,14 @@ export default function Categories() {
     } else {
       setParentCategory('')
     }
-    
-    console.log(category)
-    if(category) {
-      setProperties(category.properties)
+
+    if(category && category?.properties) {
+      setProperties(
+        category?.properties.map(({name,values}) => ({
+          name,
+          values:values.join(",")
+        }))
+      )
     }
   }
   
@@ -98,7 +103,7 @@ export default function Categories() {
 
   const addProperty = () => {
     setProperties((prev) => {
-      return [...prev, {name: '',value: ''}]
+      return [...prev, {name: '',values: ''}]
     })
   }
 
@@ -113,7 +118,7 @@ export default function Categories() {
   const handlePropertyNewValue = (index,newValue) => {
     setProperties((prev) => {
       const properties = [...prev]
-      properties[index].value = newValue;
+      properties[index].values = newValue;
       return properties
     })
   }
@@ -190,7 +195,7 @@ export default function Categories() {
                 className="mb-0"
                 type="text" 
                 placeholder="value: Ex:(silver)" 
-                value={property.value} 
+                value={property.values} 
                 onChange={(e) => handlePropertyNewValue(index,e.target.value)}
               />
               <button 
@@ -235,7 +240,7 @@ export default function Categories() {
             {categoryInfo && categoryInfo.map((category) => (
               <tr key={category._id}>
                 <td>
-                  {category.name}
+                  {category?.name}
                 </td>
                 <td>
                   {category?.parent?.name}

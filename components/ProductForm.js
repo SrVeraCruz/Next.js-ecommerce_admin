@@ -13,36 +13,47 @@ export default function ProductForm({
   price:existingPrice,
   images:existingImages,
   category:existingCategory,
+  properties:existingProperties,
 }){
   const [title,setTitle] = useState(existingTitle || "");
   const [description,setDescription] = useState(existingDescription || "");
   const [price,setPrice] = useState(existingPrice || "");
   const [images,setImages] = useState(existingImages || []);
+  const [categoryInfo,setCategoryInfo] = useState(existingCategory || '');
+  const [productProperties,setProductProperties] = useState(existingProperties || {});
   const [goToProducts,setGoToProducts] = useState(false);
   const [isUploading,setIsUploading] = useState(false);
-  const [categoryInfo,setCategoryInfo] = useState()
-  const [curentCategory,setCurentCategory] = useState(existingCategory || undefined);
-  
+  const [categories,setCategories] = useState([]);
+
+  console.log(productProperties)
+
   useEffect(() => {
     axios.get("/api/categories")
     .then((res) => {
-      setCategoryInfo(res.data)
+      setCategories(res.data)
     })
     .catch((err) => {console.error(err.message)})
   }, []);
 
   const saveProduct = async(e) => {
     e.preventDefault();
-    const data = {title,description,price,images,curentCategory};
+    const data = {
+      title,
+      description,
+      price,
+      images,
+      category:categoryInfo,
+      properties:productProperties,
+    };
     if(_id){
       //update product
       await axios.put("/api/products", {...data,_id})
-        .then((res) => {console.log(res.data)})
+        .then((res) => {/*console.log(res.data)*/})
         .catch((err) => {console.error(err.message)})
     } else {
       //create product
       await axios.post('/api/products', data)
-        .then((res) => {console.log(res.data)})
+        .then((res) => {/*console.log(res.data)*/})
         .catch((err) => {console.error(err.message)})
     }
     setGoToProducts(true);
@@ -67,13 +78,36 @@ export default function ProductForm({
           setImages((oldImages) => [...oldImages, res.data.secure_url])
         })
         .catch(err => {console.error(err.message)})
-      }
-      setIsUploading(false);
     }
+    setIsUploading(false);
+  }
 
-    const updateImageOrders = (images) => {
-      setImages(images)
+  const updateImageOrders = (images) => {
+    setImages(images)
+  }
+
+  const propertiesToFill = []
+  if(categories.length && categoryInfo) {
+    let catInfo = categories.find(
+      ({_id}) => _id === categoryInfo)
+    
+    propertiesToFill.push(...catInfo?.properties || categoryInfo?.properties)
+    while(catInfo?.parent?._id) {
+      const parentCat = categories.find(
+        ({_id}) => _id === catInfo?.parent?._id
+      )
+      propertiesToFill.push(...parentCat?.properties)
+      catInfo = parentCat
     }
+  }
+
+  const setProdProp = (propName,value) => {
+    setProductProperties((prev) => {
+      const newProductProps = {...prev}
+      newProductProps[propName] = value
+      return newProductProps
+    })
+  }
 
   return (
     <form onSubmit={saveProduct}>
@@ -92,11 +126,11 @@ export default function ProductForm({
       />
       <label>Category</label>
       <select 
-        value={curentCategory?._id || ''}
-        onChange={(e) => setCurentCategory(e.target.value)}
+        value={categoryInfo?._id}
+        onChange={(e) => setCategoryInfo(e.target.value)}
       >
         <option value="">Uncategorized</option>
-        {categoryInfo && categoryInfo.map((category) => (
+        {categories && categories.map((category) => (
           <option 
             key={category._id}
             value={category._id}
@@ -105,6 +139,34 @@ export default function ProductForm({
           </option>  
         ))}
       </select>
+      {!!propertiesToFill.length && 
+        <label>Properties</label>
+      }
+      {!!propertiesToFill.length && propertiesToFill.map((property,index) => (
+        <div key={index} className="flex gap-1 mb-1.5">
+          <div className="flex gap-1 w-full">
+            <div
+              className="text-nowrap"
+            >
+              {property.name}:
+            </div>
+            <select 
+              value={productProperties[property.name]}
+              onChange={(e) => setProdProp(property.name,e.target.value)}
+            >
+              {property.values.map(value => (
+                <option 
+                  
+                  key={value}
+                  value={value}
+                >
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>  
+      ))}
       <label>Photos:</label>
       <div className="flex flex-wrap gap-1 mb-2">
         <ReactSortable 
