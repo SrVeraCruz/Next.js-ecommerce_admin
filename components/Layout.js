@@ -12,8 +12,8 @@ export default function Layout({children}) {
   if(!session) {
     return (
       <div className="bg-bgGray w-screen h-screen flex items-center">
-        <div className="text-center w-full">
-          <button onClick={() => signIn("google")} className="bg-white p-1.5 px-4 rounded-lg">Login with Google</button>
+        <div className="text-center w-full text-primary">
+          <button onClick={() => signIn("google")} className="bg-gray-300 p-1.5 px-4 rounded-lg">Login with Google</button>
         </div>
       </div>
     );
