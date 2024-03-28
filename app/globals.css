@@ -7,7 +7,7 @@ img {
 }
 
 input, textarea, select {
-  @apply border-2 border-gray-400 px-1.5 rounded-md w-full mb-2
+  @apply border border-gray-200 px-3 py-2 rounded-sm w-full mb-2 shadow-sm
 }
 
 input:focus, textarea:focus, select:focus {
@@ -15,35 +15,39 @@ input:focus, textarea:focus, select:focus {
 }
 
 h1 {
-@apply text-blue-900 mb-2 text-lg font-semibold
+  @apply text-gray-800 mb-4 text-lg font-semibold
 }
 
 label {
-  @apply text-blue-900
+  @apply text-gray-600 text-sm
 }
 
 .btn-default {
-  @apply bg-gray-500 text-white py-1 px-2.5 rounded-md
+  @apply bg-white text-gray-800 py-1.5 px-4 rounded-sm border border-gray-200 shadow-sm
 }
 
 .btn-primary {
   @apply btn-default;
-  @apply bg-blue-900
+  @apply bg-primary text-white
 }
 
 .btn-red {
   @apply btn-default;
-  @apply bg-red-700
+  @apply bg-red-200 text-red-600;
 }
 
 table.basic {
-  @apply w-full
+  @apply w-full bg-white rounded-sm shadow-md
 }
 
 table.basic thead tr td {
-  @apply bg-blue-100
+  @apply text-sm uppercase text-gray-600 border-b border-gray-300 px-4 py-2
 }
 
 table.basic tr td {
-  @apply border border-blue-200 p-1
+  @apply  px-4 py-1
+}
+
+table.basic tbody tr td a {
+  @apply py-1 px-4 rounded-sm inline-flex text-sm items-center gap-1
 }

@@ -140,33 +140,29 @@ export default function ProductForm({
         ))}
       </select>
       {!!propertiesToFill.length && 
-        <label>Properties</label>
-      }
-      {!!propertiesToFill.length && propertiesToFill.map((property,index) => (
-        <div key={index} className="flex gap-1 mb-1.5">
-          <div className="flex gap-1 w-full">
-            <div
-              className="text-nowrap"
-            >
-              {property.name}:
+        propertiesToFill.map((property,index) => (
+          <div key={index} className="flex gap-1 mb-1.5">
+            <div className="w-full">
+              <label className="capitalize">
+                {property.name}
+              </label>
+              <select 
+                value={productProperties[property.name]}
+                onChange={(e) => setProdProp(property.name,e.target.value)}
+              >
+                {property.values.map(value => (
+                  <option 
+                    key={value}
+                    value={value}
+                  >
+                    {value}
+                  </option>
+                ))}
+              </select>
             </div>
-            <select 
-              value={productProperties[property.name]}
-              onChange={(e) => setProdProp(property.name,e.target.value)}
-            >
-              {property.values.map(value => (
-                <option 
-                  
-                  key={value}
-                  value={value}
-                >
-                  {value}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>  
-      ))}
+          </div>  
+        )
+      )}
       <label>Photos:</label>
       <div className="flex flex-wrap gap-1 mb-2">
         <ReactSortable 
@@ -174,17 +170,17 @@ export default function ProductForm({
           list={images} setList={updateImageOrders}
         >
           {!!images.length && images.map((link) => (
-            <div key={link} className="h-24 flex rounded-lg">
+            <div key={link} className="h-24 flex rounded-sm bg-white p-4 border border-gray-200 shadow-sm">
               <img className="object-cover rounded-lg" src={link} alt={title}/>
             </div>
           ))}
         </ReactSortable>
         {isUploading &&
-          <div className="flex justify-center items-center w-20 h-24 bg-gray-200 rounded-lg">
+          <div className="flex justify-center items-center w-20 h-24 rounded-sm bg-white p-4 border border-gray-200 shadow-sm">
             <Spinner/>
           </div>
         }
-        <label className="w-24 h-24 text-center flex justify-center items-center text-sm gap-1 text-gray-500 bg-gray-200 rounded-lg cursor-pointer">
+        <label className="w-24 h-24 text-center flex justify-center items-center text-sm gap-1 text-primary bg-white border border-primary shadow-sm rounded-sm cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
           </svg>
