@@ -1,5 +1,5 @@
 import { BounceLoader } from "react-spinners";
 
 export default function Spinner() {
-  return <BounceLoader color="#6b7280" size={50} />
+  return <BounceLoader color="#5542f6" size={50} />
 }

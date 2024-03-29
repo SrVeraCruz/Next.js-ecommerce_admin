@@ -4,6 +4,8 @@ const CategoryShema = new Schema({
   name: {type: String, required: true},
   parent: {type: Schema.Types.ObjectId, ref: "Category", default: null},
   properties: [{type: Object}],
+},{
+  timestamps: true,
 })
 
 CategoryShema.path('parent').set((value) => {
