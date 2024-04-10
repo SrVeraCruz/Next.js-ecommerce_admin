@@ -1,9 +1,9 @@
 'use client'
 
 import { useSession, signIn } from "next-auth/react"
-import Nav from "../components/Nav.js"
+import Nav from "./Nav.jsx"
 import { useState } from "react"
-import Logo from "./Logo.js"
+import Logo from "./Logo.jsx"
 
 export default function Layout({children}) {
   const [showNav,setShowNav] = useState(false)

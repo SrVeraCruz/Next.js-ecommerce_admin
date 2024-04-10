@@ -15,6 +15,7 @@
     "cloudinary": "^2.0.3",
     "formidable": "^3.5.1",
     "formidable-serverless": "^1.1.1",
+    "micro": "^10.0.1",
     "mongodb": "^6.3.0",
     "mongoos": "^0.0.1-security",
     "mongoose": "^8.2.0",
@@ -26,6 +27,7 @@
     "react-dom": "^18",
     "react-sortablejs": "^6.1.4",
     "react-spinners": "^0.13.8",
+    "stripe": "^14.24.0",
     "sweetalert2": "^11.10.7"
   },
   "devDependencies": {
