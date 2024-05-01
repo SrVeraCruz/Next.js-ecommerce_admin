@@ -24,7 +24,7 @@ const authOption = {
   }
 }
 
-export default NextAuth(authOption);
+const handler = NextAuth(authOption);
 
 // export const isAdminRequest = async () => {
 //   const session = await getServerSession(authOption)
@@ -34,3 +34,5 @@ export default NextAuth(authOption);
 //     throw error
 //   }
 // }
+
+export { handler as GET, handler as POST }
