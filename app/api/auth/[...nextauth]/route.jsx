@@ -14,7 +14,7 @@ const authOption = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   callbacks: {
-    session: ({session,token,user}) => {
+    session: ({session}) => {
       if (adminEmails.includes(session?.user?.email)) {
         return session
       } else {
@@ -24,15 +24,13 @@ const authOption = {
   }
 }
 
-const handler = NextAuth(authOption);
+export default NextAuth(authOption);
 
-export const isAdminRequest = async () => {
-  const session = await getServerSession(authOption)
-  if(!adminEmails.includes(session?.user?.email)) {
-    const error = new Error('Not authorized! Admin only.')
-    error.status = 401;
-    throw error
-  }
-}
-
-export { handler as GET, handler as POST }
+// export const isAdminRequest = async () => {
+//   const session = await getServerSession(authOption)
+//   if(!adminEmails.includes(session?.user?.email)) {
+//     const error = new Error('Not authorized! Admin only.')
+//     error.status = 401;
+//     throw error
+//   }
+// }

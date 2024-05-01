@@ -8,7 +8,7 @@ export async function POST(req) {
   const { name, parentCategory, properties } = data
 
   await mongooseConnect();
-  await isAdminRequest();
+  // await isAdminRequest();
 
   const categoryDoc = await Category.create({
     name,
@@ -21,7 +21,7 @@ export async function POST(req) {
 
 export async function GET(req) {
   await mongooseConnect();
-  await isAdminRequest();
+  // await isAdminRequest();
 
   const categoryDoc = await Category.find().populate("parent");
 
@@ -30,7 +30,7 @@ export async function GET(req) {
 
 export async function PUT(req) {
   await mongooseConnect();
-  await isAdminRequest();
+  // await isAdminRequest();
 
   const data = await req.json()
   const { name, parentCategory, properties, _id } = data
@@ -49,7 +49,7 @@ export async function PUT(req) {
 
 export async function DELETE(req) {
   await mongooseConnect();
-  await isAdminRequest();
+  // await isAdminRequest();
 
   const url = new URL(req.url)
   const _id = url.searchParams.get("id")
