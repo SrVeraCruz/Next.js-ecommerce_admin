@@ -25,8 +25,6 @@ export default function ProductForm({
   const [isUploading,setIsUploading] = useState(false);
   const [categories,setCategories] = useState([]);
 
-  console.log(productProperties)
-
   useEffect(() => {
     axios.get("/api/categories")
     .then((res) => {
@@ -72,6 +70,7 @@ export default function ProductForm({
         data.append("file", file)
       }
       data.append("upload_preset", "my-uploads")
+    
 
       await axios.post("https://api.cloudinary.com/v1_1/dbfaih2du/image/upload", data)
         .then(res => {
