@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Product } from "../../../models/Products";
 import { mongooseConnect } from "../../../lib/mongoose";
-import { isAdminRequest } from "../auth/[...nextauth]/route";
+// import { isAdminRequest } from "../auth/[...nextauth]/route";
 
 export async function POST(req) {
   await mongooseConnect();
